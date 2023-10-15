@@ -18,12 +18,10 @@ model = load_model('model/model.h5')
 async def predict(file:UploadFile):
     image_data = await file.read()
     
-    image = Image.open(io.BytesIO(image_data)).convert('RGB')
+    image = Image.open(io.BytesIO(image_data))
     
     image = image.resize((224, 224)) 
     image_array = np.asarray(image)
-
-    image_array = preprocess_input(image_array)
 
     image_array = np.expand_dims(image_array, axis=0)  
     predictions = model.predict(image_array)
