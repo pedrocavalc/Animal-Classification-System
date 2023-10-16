@@ -15,10 +15,9 @@ Jenkins: An open-source automation server, facilitating continuous integration a
 SHAP: A tool to make machine learning models more transparent and to explain their predictions.
 ### Quick Start
 Setup: Ensure you have Docker installed.
-bash
-Copy code
+```bash
 docker-compose up
-
+```
 Access Streamlit UI: Open your browser and navigate to http://localhost:8501.
 
 Making Predictions: Upload an animal image and get both the classification and SHAP explanation.
@@ -26,6 +25,7 @@ Making Predictions: Upload an animal image and get both the classification and S
 MLflow Tracking: Navigate to http://localhost:5000 to see tracked experiments.
 
 ## Directory Structure
+```bash
 .
 ├── app/                    # FastAPI application folder
 │   ├── main.py
@@ -36,14 +36,15 @@ MLflow Tracking: Navigate to http://localhost:5000 to see tracked experiments.
 ├── docker-compose.yml
 ├── Jenkinsfile             # Jenkins pipeline definition
 └── README.md
+```
 # Development
-## Model Training: I used TensorFlow to train our model. Training scripts are available in the app/model directory.
+- Model Training: I used TensorFlow to train our model. Training scripts are available in the app/model directory.
 
-## API with FastAPI: The FastAPI application in the app/ directory serves the trained model. It accepts an image as input and returns the predicted class and SHAP explanation.
+- API with FastAPI: The FastAPI application in the app/ directory serves the trained model. It accepts an image as input and returns the predicted class and SHAP explanation.
 
-Frontend with Streamlit: The Streamlit application provides an interactive UI for users to upload images and view predictions and explanations.
+- Frontend with Streamlit: The Streamlit application provides an interactive UI for users to upload images and view predictions and explanations.
 
-## Continuous Integration and Continuous Deployment (CI/CD)
+- Continuous Integration and Continuous Deployment (CI/CD)
 The Jenkins pipeline automates the process of testing and deploying our application. It ensures that any changes to the codebase don't break existing functionality and that our application is always deployed with the latest features and fixes.
 
 # Contributing
