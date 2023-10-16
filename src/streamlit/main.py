@@ -92,13 +92,11 @@ def upload_function():
             decoded_image = base64.b64decode(response_data["shap_image"].split(",")[1])
             prediction_image = Image.open(BytesIO(decoded_image))
             
-            st.divider()
-
-                
+            st.divider()               
             st.markdown("## Predicted class: ", unsafe_allow_html=True)
             annotated_text(
                 annotation(
-                    response_data['predicted_class'],
+                    response_data['predicted_class'].capitalize(),
                     font_family="Arial",
                     border="1px solid gray",
                     font_size="24px",
@@ -109,7 +107,6 @@ def upload_function():
             )
             st.image(prediction_image, use_column_width=True)
 
-            st.markdown("</div>", unsafe_allow_html=True)  # Fim do contorno
 
             st.markdown("## To make another prediction, upload another file above!")
 
