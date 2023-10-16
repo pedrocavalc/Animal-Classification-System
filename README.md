@@ -26,8 +26,6 @@ Making Predictions: Upload an animal image and get both the classification and S
 MLflow Tracking: Navigate to http://localhost:5000 to see tracked experiments.
 
 ## Directory Structure
-bash
-Copy code
 .
 ├── app/                    # FastAPI application folder
 │   ├── main.py
