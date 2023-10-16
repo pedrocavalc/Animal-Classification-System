@@ -3,21 +3,10 @@ import requests
 from PIL import ImageDraw, Image
 from streamlit.runtime.scriptrunner import add_script_run_ctx
 from io import BytesIO
-import random
+from annotated_text import annotated_text, annotation
 import time
 import threading
-
-API_URL = "http://localhost:8000/predict"
-stop_scanning = threading.Event()
-
-import streamlit as st
-import requests
-from PIL import ImageDraw, Image, ImageChops
-from streamlit.runtime.scriptrunner import add_script_run_ctx
-from io import BytesIO
-import random
-import time
-import threading
+import base64
 
 API_URL = "http://localhost:8000/predict"
 stop_scanning = threading.Event()
@@ -82,12 +71,17 @@ def upload_function():
 
         stop_scanning.set()
         thread.join()
-        
+        placeholder.empty()
+
         if response.status_code == 200:
-            prediction_image = BytesIO(response.content)
-            st.image(prediction_image, caption="Prediction", use_column_width=True)
+            response_data = response.json()  # Parse JSON response
+            decoded_image = base64.b64decode(response_data["shap_image"].split(",")[1])
+            prediction_image = Image.open(BytesIO(decoded_image))
+            annotated_text(f"Predicted class: ", annotation(response_data['predicted_class'], font_family="Comic Sans MS", border="1px dashed red"))
+            st.image(prediction_image, caption=f"Prediction: {response_data['predicted_class']}", use_column_width=True)
+            
         else:
-            st.error("Error during API call.")
+            st.error('Error during API call')
 
 def send_image_to_api(image):
     buffered = BytesIO()
@@ -98,6 +92,12 @@ def send_image_to_api(image):
     return response
 
 def main():
+    st.title("Welcome to Explainable AI app for animal classification!")
+    st.sidebar.title("Informations about the project:")
+    st.sidebar.info("This project was developed by Pedro Cavalcante. [GitHub](https://github.com/pedrocavalc)")
+    st.sidebar.info("The project uses a ResNet50 model trained on the Animals-90 dataset.The objective of the project is to classify images of animals into 90 differentes species. The project uses SHAP to explain the model's predictions.")
+    st.sidebar.info("The main objective of the project is to learn MLOps techniques to serve the model in production time. Every 3 days a new model is automatically trained, the mlflow library is used to serve the models and automated tests with Jenkins to maintain the quality of the code and model before serving it to production.     If the trained model meets the necessary requirements, it is automatically sent to production and the old one archived.")
+    st.sidebar.info("For more information about the tools used and the project flowchart, see the repository.")
     if 'button_clicked' not in st.session_state:
         st.session_state.button_clicked = False
 
