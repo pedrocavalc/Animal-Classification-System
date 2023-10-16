@@ -23,6 +23,11 @@ Access Streamlit UI: Open your browser and navigate to http://localhost:8501.
 Making Predictions: Upload an animal image and get both the classification and SHAP explanation.
 
 MLflow Tracking: Navigate to http://localhost:5000 to see tracked experiments.
+## Usage
+Below is the application usage flow. Just press the file upload button and wait for the scanning and prediction to return.
+
+[App-usage.webm](https://github.com/pedrocavalc/Animal-Classification-System/assets/89861384/9a0b5149-f182-4333-8286-c8f744601fd8)
+
 
 ## Directory Structure
 ```bash
