@@ -94,3 +94,4 @@ CLASS_DICT= {0: 'antelope',
 def load_model(path):
     model = tf.keras.models.load_model(path)
     return model
+
