@@ -30,13 +30,11 @@ async def predict(file: UploadFile):
     image = image.resize((224, 224)) 
     image_array = np.asarray(image)
     image_array = np.expand_dims(image_array, axis=0)
-    
     predictions = model.predict(image_array)
     predicted_class = CLASS_DICT[np.argmax(predictions)]
-    
     masker = shap.maskers.Image(mask_value="blur(128, 128)", shape=(224,224,3))
     explainer = shap.Explainer(model=model.predict, masker=masker, algorithm="auto", output_names=list(CLASS_DICT.values()))
-    shap_values = explainer(image_array, max_evals=100, outputs=shap.Explanation.argsort.flip[:2])
+    shap_values = explainer(image_array, max_evals=500, outputs=shap.Explanation.argsort.flip[:2])
     
     shap.image_plot(shap_values=shap_values, show=False)
 

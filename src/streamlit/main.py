@@ -62,6 +62,7 @@ def send_image_to_api(image) -> requests.Response:
     image.save(buffered, format="JPEG")
     image_str = buffered.getvalue()
     files = {"file": image_str}
+    print(API_URL)
     return requests.post(API_URL, files=files)
 
 def upload_function():
