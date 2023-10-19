@@ -8,8 +8,8 @@ import time
 import threading
 import base64
 
-# Constants
-API_URL = "http://localhost:8000/predict"
+
+API_URL = "http://apianimal:8000/predict"
 REFERENCE_RESOLUTION = 1920 * 1080
 REFERENCE_SPEED = 0.01  
 SQUARE_SIZE = 20
