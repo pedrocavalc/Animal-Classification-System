@@ -1,12 +1,16 @@
-FROM python:3.9.18-bullseye
+FROM tensorflow/tensorflow:2.12.0-gpu
 
-WORKDIR app/
-
-COPY . .
+WORKDIR /app
+COPY requirements.txt .
 # update and install dependencies
 RUN apt-get update && \
-apt -y install python3-venv && \
-python3 --version  &&\
-python3 -m venv env  \
-&& . env/bin/activate \
-&& pip3 install -r requirements.txt
+pip3 install -r requirements.txt && \
+apt-get install ffmpeg libsm6 libxext6  -y
+
+COPY . .
+
+WORKDIR /app/src/app
+
+EXPOSE 8000
+
+ENTRYPOINT [ "uvicorn", "manager:app", "--host", "0.0.0.0" , "--port", "8000" ]
