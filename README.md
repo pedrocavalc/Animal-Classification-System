@@ -18,7 +18,7 @@ Setup: Ensure you have Docker installed.
 ```bash
 docker-compose up
 ```
-Access Streamlit UI: Open your browser and navigate to http://localhost:8501.
+Access Streamlit UI: Open your browser and navigate to http://localhost:3001.
 
 Making Predictions: Upload an animal image and get both the classification and SHAP explanation.
 
