@@ -1,0 +1,15 @@
+artifact_uri: file:///home/pedro/Desktop/Pessoal/Shirt-Classification/classifier/mlruns/0/64cfd894a86d4c62af65a562a026a729/artifacts
+end_time: 1697838622144
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 64cfd894a86d4c62af65a562a026a729
+run_name: able-kit-287
+run_uuid: 64cfd894a86d4c62af65a562a026a729
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1697838611699
+status: 4
+tags: []
+user_id: pedro

@@ -1,0 +1,30 @@
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ inputLayer (InputLayer)     [(None, 224, 224, 3)]     0         
+                                                                 
+ AugmentationLayer (Sequenti  (None, 224, 224, 3)      0         
+ al)                                                             
+                                                                 
+ resnet50 (Functional)       (None, 2048)              23587712  
+                                                                 
+ dense (Dense)               (None, 256)               524544    
+                                                                 
+ activation (Activation)     (None, 256)               0         
+                                                                 
+ batch_normalization (BatchN  (None, 256)              1024      
+ ormalization)                                                   
+                                                                 
+ dropout (Dropout)           (None, 256)               0         
+                                                                 
+ dense_1 (Dense)             (None, 90)                23130     
+                                                                 
+ activationLayer (Activation  (None, 90)               0         
+ )                                                               
+                                                                 
+=================================================================
+Total params: 24,136,410
+Trainable params: 548,186
+Non-trainable params: 23,588,224
+_________________________________________________________________
