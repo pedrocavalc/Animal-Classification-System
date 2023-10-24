@@ -12,7 +12,7 @@ class TrainOrchestrator:
         model = CustomResNet50(num_classes=num_classes).get_model()
         model.summary()
         mlflow.set_experiment("ResNet50")
-        mlflow.autolog()
+        mlflow.tensorflow.autolog()
         with mlflow.start_run():
             history = model.fit(
             train_data,
@@ -30,7 +30,12 @@ class TrainOrchestrator:
             self.test_register_model(model, test_data)
     
     def test_register_model(self, model,test_data):
+        model_lists = self.client.search_registered_models()
+        if not model_lists:
+            run_id = mlflow.active_run().info.run_id
+            print(run_id)
+            experiment_id = self.client.get_experiment_by_name('ResNet50').experiment_id
+            result = self.client.create_model_version(name='ResNetAPI', source= '/mlartifacts' + '/' + experiment_id + '/' + run_id + '/model')
         acc = model.evaluate(test_data, steps=len(test_data))[1]
-        model_in_production = self.client.get_latest_versions("test", stages=["Production"])
-        print(model_in_production)
+
        
