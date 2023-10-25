@@ -33,9 +33,17 @@ class TrainOrchestrator:
         model_lists = self.client.search_registered_models()
         if not model_lists:
             run_id = mlflow.active_run().info.run_id
-            print(run_id)
-            experiment_id = self.client.get_experiment_by_name('ResNet50').experiment_id
-            result = self.client.create_model_version(name='ResNetAPI', source= '/mlartifacts' + '/' + experiment_id + '/' + run_id + '/model')
-        acc = model.evaluate(test_data, steps=len(test_data))[1]
+            artifact_uri = self.client.get_run(run_id).info.artifact_uri
+            model_path = f"{artifact_uri}/{run_id}/model"
+            print(model_path)
+            self.client.create_registered_model(name='ResNet50')
+            self.client.create_model_version(run_id=run_id, name='ResNet50', source=model_path)
+        else:
+            acc = model.evaluate(test_data, steps=len(test_data))[1]
+            if acc[1] > 0.7:
+                """
+                TODO: implemente a logic to register the model
+                """
+                pass
 
        
