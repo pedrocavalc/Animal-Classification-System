@@ -1,3 +1,5 @@
 Dataset/*
 archive/*
 src/app/model/*
+classifier/mlartifacts
+classifier/mydb.sqlite
