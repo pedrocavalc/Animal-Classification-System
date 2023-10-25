@@ -19,7 +19,7 @@ class TrainOrchestrator:
             steps_per_epoch=len(train_data),
             validation_data=valid_data,
             validation_steps=len(valid_data),
-            epochs=1,
+            epochs=20,
             callbacks=[
                 EarlyStopping(monitor = "val_loss", 
                                     patience = 3,
@@ -35,15 +35,33 @@ class TrainOrchestrator:
             run_id = mlflow.active_run().info.run_id
             artifact_uri = self.client.get_run(run_id).info.artifact_uri
             model_path = f"{artifact_uri}/{run_id}/model"
-            print(model_path)
             self.client.create_registered_model(name='ResNet50')
             self.client.create_model_version(run_id=run_id, name='ResNet50', source=model_path)
+            self.client.transition_model_version_stage(
+                 name='ResNet50',
+                 version=1,
+                 stage='Production',
+                 archive_existing_versions=True
+             )
+  
         else:
             acc = model.evaluate(test_data, steps=len(test_data))[1]
-            if acc[1] > 0.7:
+            if acc > 0.4:
                 """
                 TODO: implemente a logic to register the model
                 """
-                pass
+                models = self.client.get_registered_model(name='ResNet50')
+                existing_versions = len(models.latest_versions)
+                run_id = mlflow.active_run().info.run_id
+                artifact_uri = self.client.get_run(run_id).info.artifact_uri
+                model_path = f"{artifact_uri}/{run_id}/model"
+                self.client.create_model_version(run_id=run_id, name='ResNet50', source=model_path)
+                self.client.transition_model_version_stage(
+                 name='ResNet50',
+                 version=existing_versions + 1,
+                 stage='Production',
+                 archive_existing_versions=True
+             )
+                
 
        

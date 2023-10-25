@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 import shap
 import matplotlib.pyplot as plt
 import os
+import mlflow
 import base64
 
 from PIL import Image
@@ -13,14 +14,18 @@ import numpy as np
 import io
 import sys
 
+mlflow.set_tracking_uri('http://localhost:5000')
 sys.path.append('src/')
+sys.path.append('classifier/')
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 
+client = mlflow.tracking.MlflowClient()
+model_metadata = client.get_latest_versions('ResNet50', stages=['Production'])
+print(model_metadata[0].run_id)
+model = mlflow.pyfunc.load_model(model_uri= f"runs:/{model_metadata[0].run_id}/model/")
+
 app = FastAPI()
-
-model = load_model('model/model.h5')
-
 @app.post("/predict")
 async def predict(file: UploadFile):
     image_data = await file.read()
