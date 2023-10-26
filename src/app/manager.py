@@ -14,7 +14,7 @@ import numpy as np
 import io
 import sys
 
-mlflow.set_tracking_uri('http://localhost:5000')
+mlflow.set_tracking_uri('http://mlflow-server:5000')
 sys.path.append('src/')
 sys.path.append('classifier/')
 
@@ -22,6 +22,8 @@ os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 
 client = mlflow.tracking.MlflowClient()
 model_metadata = client.get_latest_versions('ResNet50', stages=['Production'])
+if not model_metadata:
+    model = load_model('model/model.h5')
 print(model_metadata[0].run_id)
 model = mlflow.pyfunc.load_model(model_uri= f"runs:/{model_metadata[0].run_id}/model/")
 

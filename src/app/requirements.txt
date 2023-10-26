@@ -1,7 +1,9 @@
 fastapi==0.103.2
 opencv-python==4.8.1.78
 Pillow==9.4.0
-streamlit==1.27.2
 matplotlib==3.7.3
-st-annotated-text
 mlflow==2.7.1
+tensorflow==2.7.0
+uvicorn
+shap
+protobuf==3.20

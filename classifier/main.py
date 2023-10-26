@@ -13,4 +13,4 @@ def main(data_path):
     train_orchestrator.run(train_loader, valid_loader, test_loader)
 
 if __name__ == "__main__":
-    main(data_path = "../Dataset/animals/animals")
+    main(data_path = "Dataset/animals/animals")

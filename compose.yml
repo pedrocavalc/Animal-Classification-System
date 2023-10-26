@@ -1,16 +1,38 @@
 services:
+
+  mlflow-server:
+    container_name: mlflow-server
+    build: ./mlflow-db/
+    restart: always
+    ports:
+      - "5000:5000"
+
+  ml-pipeline:
+    container_name: ml-animal-pipeline
+    command: ["python", "main.py"]
+    build: ./classifier/
+    restart: 
+    depends_on:
+      - mlflow-server
+
   api:
     container_name: apianimal
-    image: pedrcavalc/animal-api:1.1
+    build: ./src/app/
     restart: always
     ports:
       - "3000:8000"
+    depends_on:
+      - ml-pipeline
+
   front:
+    depends_on:
+      - api
     container_name: front-animal
-    image: pedrcavalc/animal-front:1.1
+    build: ./src/streamlit/
     restart: always
     ports:
     - "3001:3000"
+
 networks:
   default:
     driver: custom-driver1

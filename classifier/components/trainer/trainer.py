@@ -1,7 +1,7 @@
 from components.model.resnet import CustomResNet50
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 import mlflow
-mlflow.set_tracking_uri('http://0.0.0.0:5000')
+mlflow.set_tracking_uri('http://mlflow-server:5000')
 
 class TrainOrchestrator:
     def __init__(self) -> None:

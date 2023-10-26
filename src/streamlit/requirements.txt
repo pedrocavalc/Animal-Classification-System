@@ -4,4 +4,3 @@ Pillow==9.4.0
 streamlit==1.27.2
 matplotlib==3.7.3
 st-annotated-text
-mlflow==2.7.1
